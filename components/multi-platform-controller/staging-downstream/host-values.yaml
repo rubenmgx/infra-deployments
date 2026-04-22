@@ -6,7 +6,7 @@ environment: "stage"
 #  - "local"
 #  - "localhost"
 
-instanceTag: "rhtap-staging"
+instanceTag: "stone-stage-p01"
 
 additionalInstanceTags:
   service-phase: "Staging"
@@ -22,7 +22,17 @@ archDefaults:
     key-name: "konflux-stage-int-mab01"
     security-group-id: "sg-0482e8ccae008b240"
     subnet-id: "subnet-07597d1edafa2b9d3"
-
+  windows-amd64:
+    ami: "ami-0cbf74fa8206e0c0f"
+    key-name: "aws-win-ssh-key"
+    security-group-id: "sg-0482e8ccae008b240"
+    subnet-id: "subnet-07597d1edafa2b9d3"
+    ssh-secret: "aws-win-ssh-key"
+  macos-mac2metal-arm64:
+    ami: "ami-000ce2c23b96216d3"
+    key-name: "konflux-prod-int-mab01"
+    security-group-id: "sg-0482e8ccae008b240"
+    subnet-id: "subnet-02c476f8d2a4ae05e"
 
 dynamicConfigs:
   linux-arm64:
@@ -52,6 +62,7 @@ dynamicConfigs:
   linux-m8xlarge-amd64: {}
 
   linux-c6gd2xlarge-arm64:
+    # user-data loaded from base/host-config-chart/files/linux-c6gd2xlarge-arm64-init.sh
     user-data: |
       Content-Type: multipart/mixed; boundary="//"
       MIME-Version: 1.0
@@ -84,6 +95,11 @@ dynamicConfigs:
       # Setup bind mounts
       mount --bind /home/var-lib-containers /var/lib/containers
       mount --bind /home/var-tmp /var/tmp
+
+      # Set permissions for var-tmp
+      chmod 1777 /home/var-tmp /var/tmp
+      chown root:root /home/var-tmp /var/tmp
+
       restorecon -r /var/lib/containers /var/tmp
 
       # Configure ec2-user SSH access
@@ -112,11 +128,30 @@ dynamicConfigs:
 
   linux-c8xlarge-amd64: {}
 
+  linux-d160-c8xlarge-arm64: {}
+
+  linux-d160-c8xlarge-amd64: {}
+
   linux-g4xlarge-amd64: {}
 
   linux-g64xlarge-amd64:
     ami: "ami-0133ba5e6e6d57a02"
-    user-data: |
+    # user-data loaded from base/host-config-chart/files/linux-g64xlarge-amd64-init.sh
+
+  macos-mac2metal-arm64:
+    ami: "ami-000ce2c23b96216d3"
+    host-resource-group-arn: "arn:aws:resource-groups:us-east-1:654654171619:group/MacOS-Servers"
+    license-configuration-arn: "arn:aws:license-manager:us-east-1:654654171619:license-configuration:lic-fecd71a2010a12080e452eb28065f489"
+    # user-data loaded from base/host-config-chart/files/macos-mac2metal-arm64-init.sh
+
+  linux-root-arm64:
+    sudo-commands: "/usr/bin/podman"
+    disk: "200"
+
+  linux-root-amd64:
+    sudo-commands: "/usr/bin/podman"
+    disk: "200"
+    user-data: |-
       Content-Type: multipart/mixed; boundary="//"
       MIME-Version: 1.0
 
@@ -148,7 +183,8 @@ dynamicConfigs:
       # Setup bind mounts
       mount --bind /home/var-lib-containers /var/lib/containers
       mount --bind /home/var-tmp /var/tmp
-      chmod a+rw /var/tmp
+      chmod 1777 /home/var-tmp /var/tmp
+      chown root:root /home/var-tmp /var/tmp
       restorecon -r /var/lib/containers /var/tmp
 
       # Configure ec2-user SSH access
@@ -159,35 +195,33 @@ dynamicConfigs:
       chmod 700 /home/ec2-user/.ssh
       restorecon -r /home/ec2-user
 
-      # GPU setup
-      mkdir -p /etc/cdi /var/run/cdi
-      chmod a+rwx /etc/cdi /var/run/cdi
-      setsebool container_use_devices 1 2>/dev/null || true
-      su - ec2-user
-      nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
-      chmod a+rw /etc/cdi/nvidia.yaml
       --//--
 
-  linux-root-arm64:
-    sudo-commands: "/usr/bin/podman"
-    disk: "200"
 
-  linux-root-amd64:
-    sudo-commands: "/usr/bin/podman"
-    disk: "200"
+  windows-4xlarge-amd64:
+    allowed-remote-addresses:
+    - 10.29.64.0/24
+    # user-data loaded from base/host-config-chart/files/windows-init.ps1
 
 # Static hosts configuration
 staticHosts:
   ppc64le-static-1:
-    address: "10.130.79.249"
+    address: "10.130.103.155"
     concurrency: "2"
     platform: "linux/ppc64le"
     secret: "ibm-ppc64le-ssh-key"
     user: "root"
 
+#  ppc64le-static-2:
+#    address: "10.130.72.59"
+#    concurrency: "1"
+#    platform: "linux/ppc64le"
+#    secret: "ibm-ppc64le-ssh-key-us-east"
+#    user: "root"
+
   s390x-static-1:
-    address: "10.130.79.197"
+    address: "10.130.72.6"
     concurrency: "2"
     platform: "linux/s390x"
     secret: "ibm-s390x-ssh-key"
-    user: "root"
+    user: "cloud-user"

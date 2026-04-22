@@ -6,6 +6,9 @@ resources:
 - plnsvc-ci-secret.yaml
 - plnsvc-codecov-secret.yaml
 - redhat-appstudio-tekton-catalog-build-definitions-pull-secret.yaml
+- e2e-tests-quay-token.yaml
+- cleanup-cronjob.yaml
+- upgrade-sa-token.yaml
 
 patches:
   - path: quay-push-secret-konflux-ci.yaml
@@ -13,16 +16,16 @@ patches:
       name: quay-push-secret-konflux-ci
       kind: ExternalSecret
       group: external-secrets.io
-      version: v1beta1
+      version: v1
   - path: infra-deployments-pr-creator.yaml
     target:
       name: infra-deployments-pr-creator
       kind: ExternalSecret
       group: external-secrets.io
-      version: v1beta1
+      version: v1
   - path: snyk-shared-token.yaml
     target:
       name: snyk-shared-token
       kind: ExternalSecret
       group: external-secrets.io
-      version: v1beta1
+      version: v1

@@ -6,7 +6,7 @@ environment: "stage"
 #  - "local"
 #  - "localhost"
 
-instanceTag: "rhtap-staging"
+instanceTag: "stone-stg-rh01"
 
 additionalInstanceTags:
   service-phase: "Staging"
@@ -15,13 +15,13 @@ archDefaults:
   arm64:
     ami: "ami-06f37afe6d4f43c47"
     key-name: "konflux-stage-ext-mab01"
-    security-group-id: "sg-05bc8dd0b52158567"
-    subnet-id: "subnet-030738beb81d3863a"
+    security-group-id: "sg-05f1da470c716c603"
+    subnet-id: "subnet-0958667237f37416a"
   amd64:
     ami: "ami-01aaf1c29c7e0f0af"
     key-name: "konflux-stage-ext-mab01"
-    security-group-id: "sg-05bc8dd0b52158567"
-    subnet-id: "subnet-030738beb81d3863a"
+    security-group-id: "sg-05f1da470c716c603"
+    subnet-id: "subnet-0958667237f37416a"
 
 dynamicConfigs:
 
@@ -110,6 +110,10 @@ dynamicConfigs:
 
   linux-c8xlarge-amd64: {}
 
+  linux-d160-c8xlarge-arm64: {}
+
+  linux-d160-c8xlarge-amd64: {}
+
   linux-g64xlarge-amd64:
     ami: "ami-0133ba5e6e6d57a02"
     user-data: |
@@ -147,14 +151,6 @@ dynamicConfigs:
       chmod a+rw /var/tmp
       restorecon -r /var/lib/containers /var/tmp
 
-      # Configure ec2-user SSH access
-      chown -R ec2-user /home/ec2-user
-      sed -n 's,.*\(ssh-.*\s\),\1,p' /root/.ssh/authorized_keys > /home/ec2-user/.ssh/authorized_keys
-      chown ec2-user /home/ec2-user/.ssh/authorized_keys
-      chmod 600 /home/ec2-user/.ssh/authorized_keys
-      chmod 700 /home/ec2-user/.ssh
-      restorecon -r /home/ec2-user
-
       # GPU setup
       mkdir -p /etc/cdi /var/run/cdi
       chmod a+rwx /etc/cdi /var/run/cdi
@@ -162,14 +158,22 @@ dynamicConfigs:
       su - ec2-user
       nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
       chmod a+rw /etc/cdi/nvidia.yaml
+
+      # Configure ec2-user SSH access
+      chown -R ec2-user /home/ec2-user
+      sed -n 's,.*\(ssh-.*\s\),\1,p' /root/.ssh/authorized_keys > /home/ec2-user/.ssh/authorized_keys
+      chown ec2-user /home/ec2-user/.ssh/authorized_keys
+      chmod 600 /home/ec2-user/.ssh/authorized_keys
+      chmod 700 /home/ec2-user/.ssh
+      restorecon -r /home/ec2-user
       --//--
 
   linux-root-arm64:
-    sudoCommands: "/usr/bin/podman"
+    sudo-commands: "/usr/bin/podman"
     disk: "200"
 
   linux-root-amd64:
-    sudoCommands: "/usr/bin/podman"
+    sudo-commands: "/usr/bin/podman"
     disk: "200"
 
 # Static hosts configuration
@@ -186,4 +190,4 @@ staticHosts:
     concurrency: "2"
     platform: "linux/s390x"
     secret: "ibm-s390x-ssh-key"
-    user: "root"
+    user: "cloud-user"

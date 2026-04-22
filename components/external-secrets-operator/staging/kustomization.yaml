@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: external-secrets-operator
+
+resources:
+- networkpolicy-default-deny.yaml
+- networkpolicy-allow-egress.yaml
+- networkpolicy-allow-ingress.yaml
+- networkpolicy-allow-same-ns.yaml
+
+helmGlobals:
+  chartHome: .
+
+helmCharts:
+- name: external-secrets
+  releaseName: external-secrets-operator
+  namespace: external-secrets-operator
+  valuesFile: values.yaml
+
+# Override the ESO image with the Konflux-built image
+images:
+- name: ghcr.io/external-secrets/external-secrets
+  newName: quay.io/konflux-ci/external-secrets-operator
+  digest: sha256:993ef0aec0688bba8fc5b428b215ed46eef4d49f6dea0db8e5d37058606f762e

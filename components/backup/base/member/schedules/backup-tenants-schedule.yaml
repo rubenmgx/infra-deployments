@@ -20,7 +20,6 @@ spec:
       - build-templates-e2e
       - ci-helper-app
       - dedicated-admin
-      - deployment-validation-operator
       - dora-metrics
       - enterprise-contract-service
       - external-secrets-operator
@@ -29,6 +28,7 @@ spec:
       - image-controller
       - integration-service
       - internal-services
+      - jvm-build-service
       - multi-platform-controller
       - perf-team-prometheus-reader
       - plnsvc-tests

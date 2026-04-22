@@ -34,8 +34,8 @@ spec:
                   values.clusterDir: kflux-rhel-p01
                 - nameNormalized: kflux-osp-p01
                   values.clusterDir: kflux-osp-p01
-                - nameNormalized: pentest-p01
-                  values.clusterDir: pentest-p01
+                - nameNormalized: kflux-fedora-01
+                  values.clusterDir: kflux-fedora-01
   template:
     metadata:
       name: etcd-defrag-{{nameNormalized}}
@@ -46,7 +46,7 @@ spec:
         repoURL: https://github.com/redhat-appstudio/infra-deployments.git
         targetRevision: main
       destination:
-        namespace: default
+        namespace: etcd-maintenance
         server: '{{server}}'
       syncPolicy:
         automated:

@@ -963,10 +963,11 @@ spec:
         resources:
           limits:
             cpu: 500m
-            memory: 512Mi
+            # The metrics exporter is expected to have memory spikes
+            memory: 2Gi
           requests:
             cpu: 250m
-            memory: 128Mi
+            memory: 1Gi
         securityContext:
           readOnlyRootFilesystem: true
           runAsNonRoot: true
@@ -1705,8 +1706,8 @@ spec:
     enable-hub-resolver: true
     enable-param-enum: true
     enable-step-actions: true
-    metrics.pipelinerun.level: namespace
-    metrics.taskrun.level: namespace
+    metrics.pipelinerun.level: pipeline
+    metrics.taskrun.level: task
     options:
       configMaps:
         config-logging:
@@ -1794,10 +1795,10 @@ spec:
                     resources:
                       limits:
                         cpu: 500m
-                        memory: 2.5Gi
+                        memory: 2560Mi
                       requests:
                         cpu: 500m
-                        memory: 2.5Gi
+                        memory: 2560Mi
         pipelines-as-code-watcher:
           spec:
             template:
@@ -2072,7 +2073,7 @@ metadata:
   namespace: openshift-marketplace
 spec:
   displayName: custom-operators
-  image: quay.io/openshift-pipeline/pipelines-index-4.17@sha256:e3c07136cd7319156bf4244ee6f806e9c536932d17b5356a1bb96f6e1b38e7ba
+  image: quay.io/openshift-pipeline/pipelines-index-4.18@sha256:d4d3f6210a384da6bfb11214a860e72e52d0a38b73037b8135c0571a6365d2a1
   sourceType: grpc
   updateStrategy:
     registryPoll:
@@ -2151,48 +2152,6 @@ runAsUser:
   type: RunAsAny
 seLinuxContext:
   type: MustRunAs
-supplementalGroups:
-  type: RunAsAny
-users: []
-volumes:
-- configMap
-- downwardAPI
-- emptyDir
-- persistentVolumeClaim
-- projected
-- secret
----
-allowHostDirVolumePlugin: false
-allowHostIPC: false
-allowHostNetwork: false
-allowHostPID: false
-allowHostPorts: false
-allowPrivilegeEscalation: false
-allowPrivilegedContainer: false
-allowedCapabilities:
-- SETFCAP
-apiVersion: security.openshift.io/v1
-defaultAddCapabilities: null
-fsGroup:
-  type: MustRunAs
-groups:
-- system:cluster-admins
-kind: SecurityContextConstraints
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "0"
-  name: appstudio-pipelines-nested-containerization-scc
-priority: 10
-readOnlyRootFilesystem: false
-requiredDropCapabilities:
-- MKNOD
-runAsUser:
-  type: RunAsAny
-seLinuxContext:
-  type: MustRunAs
-  seLinuxOptions:
-    type: container_runtime_t
 supplementalGroups:
   type: RunAsAny
 users: []

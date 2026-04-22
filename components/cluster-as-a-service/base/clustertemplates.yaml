@@ -30,8 +30,8 @@ spec:
       project: default
       source:
         chart: hypershift-aws-template
-        repoURL: https://konflux-ci.dev/cluster-template-charts/
-        targetRevision: 0.1.8
+        repoURL: https://konflux-ci.dev/cluster-template-charts
+        targetRevision: 0.1.9
         helm:
           parameters:
             - name: region

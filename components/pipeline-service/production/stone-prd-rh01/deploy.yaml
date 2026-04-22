@@ -1989,7 +1989,7 @@ spec:
         secret:
           secretName: tekton-results-for-watcher-tls
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   annotations:
@@ -2010,7 +2010,7 @@ spec:
     deletionPolicy: Delete
     name: pipelines-as-code-secret
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   annotations:
@@ -2036,7 +2036,7 @@ spec:
         annotations:
           argocd.argoproj.io/sync-options: Prune=false
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   annotations:
@@ -2060,7 +2060,7 @@ spec:
         annotations:
           argocd.argoproj.io/sync-options: Prune=false
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   annotations:
@@ -2089,7 +2089,7 @@ spec:
         endpoint: https://{{ .endpoint }}
         s3_url: s3://{{ .bucket }}
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   annotations:
@@ -2110,7 +2110,7 @@ spec:
     deletionPolicy: Delete
     name: tekton-results-database
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   annotations:
@@ -2515,7 +2515,7 @@ metadata:
   namespace: openshift-marketplace
 spec:
   displayName: custom-operators
-  image: quay.io/openshift-pipeline/pipelines-index-4.17@sha256:a6a0ab73565bb51344c0443e4447a8878d6a8e45ab3be44b3a6d2de0491364a8
+  image: quay.io/openshift-pipeline/pipelines-index-4.18@sha256:d4d3f6210a384da6bfb11214a860e72e52d0a38b73037b8135c0571a6365d2a1
   sourceType: grpc
   updateStrategy:
     registryPoll:
@@ -2535,8 +2535,6 @@ spec:
     env:
     - name: AUTOINSTALL_COMPONENTS
       value: "false"
-    - name: IMAGE_PIPELINES_CONSOLE_PLUGIN
-      value: quay.io/openshift-pipeline/pipelines-console-plugin-rhel9@sha256:6069f5659392ee604992b12c6fa972f4d20e74fc71e6aade68a0dbc567f24cbd
   name: openshift-pipelines-operator-rh
   source: custom-operators
   sourceNamespace: openshift-marketplace

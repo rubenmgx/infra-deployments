@@ -7,13 +7,13 @@ resources:
 - has/
 - integration/
 - migration/
-- release/
 - performance/
 - pipeline-service/
 - generic-dashboards/
 - namespace-lister/
 - kueue/
 - kyverno/
+- kubearchive/
 
 # Removing the installation of power-monitoring dashboard for now
 # - power-monitoring/

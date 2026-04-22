@@ -6,7 +6,6 @@ resources:
   - ../../base/ca-bundle
   - ../../base/repository-validator
   - ../../base/cluster-secret-store-rh
-  - ../../base/monitoring-workload-kanary
 patchesStrategicMerge:
   - delete-applications.yaml
 namespace: argocd
@@ -86,6 +85,11 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: monitoring-workload-grafana
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: monitoring-workload-custom-kube-state-metrics
   - path: production-overlay-patch.yaml
     target:
       kind: ApplicationSet
@@ -266,3 +270,28 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: monitoring-blackbox
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: monitoring-registry
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: image-rbac-proxy
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: konflux-kite
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: disaster-recovery
+  - path: production-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: perf-team-prometheus-reader

@@ -1,0 +1,44 @@
+name: infra-tools CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "infra-tools/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "infra-tools/**"
+
+defaults:
+  run:
+    working-directory: infra-tools
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: infra-tools/go.mod
+          cache-dependency-path: infra-tools/go.sum
+
+      - name: Check go.mod and go.sum are tidy
+        run: go mod tidy -diff
+
+      - name: Lint (all issues)
+        run: make lint
+        continue-on-error: true
+
+      - name: Lint (new issues only)
+        run: make lint LINT_ARGS="--new-from-rev=origin/main"
+
+      - name: Run tests
+        run: make test

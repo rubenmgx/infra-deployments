@@ -7,6 +7,8 @@ resources:
   - ../../base/ca-bundle
   - ../../base/repository-validator
   - ../../base/eaas
+  - ../../base/smee-client
+  - ../../base/backup
 
 patchesStrategicMerge:
   - delete-applications.yaml
@@ -56,11 +58,6 @@ patches:
     target:
       kind: ApplicationSet
       version: v1alpha1
-      name: monitoring-workload-grafana
-  - path: development-overlay-patch.yaml
-    target:
-      kind: ApplicationSet
-      version: v1alpha1
       name: release
   - path: development-overlay-patch.yaml
     target:
@@ -87,6 +84,11 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: project-controller
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: backup
   # The 'appstudio.redhat.com/eaas-cluster' cluster role label must also be present for
   # cluster-as-a-service to be deployed.
   - path: development-overlay-patch.yaml
@@ -189,3 +191,28 @@ patches:
       kind: ApplicationSet
       version: v1alpha1
       name: squid
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: image-rbac-proxy
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: smee-client
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: konflux-info
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: disaster-recovery
+  - path: development-overlay-patch.yaml
+    target:
+      kind: ApplicationSet
+      version: v1alpha1
+      name: perf-team-prometheus-reader

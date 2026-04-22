@@ -12,9 +12,14 @@ metadata:
   name: nvme-storage-configurator
 $patch: delete
 ---
-# Kite is still in proof-of-concept phase
+# Cardinality exporter is staging-only
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: konflux-kite
+  name: monitoring-cardinality
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: disaster-recovery
 $patch: delete

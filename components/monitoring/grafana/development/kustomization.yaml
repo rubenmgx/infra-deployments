@@ -2,15 +2,35 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/grafana/base?ref=4d0a0dfb145b53ab61292e16b9f0fc3bbc2dfa40
+  - dashboards
+  - https://github.com/redhat-appstudio/o11y/config/exporters/monitoring/grafana/base?ref=0d3c45516968bffb24196952c3273cebd6df5d4f
 
 images:
 - name: quay.io/redhat-appstudio/o11y
   newName: quay.io/redhat-appstudio/o11y
-  newTag: 4d0a0dfb145b53ab61292e16b9f0fc3bbc2dfa40
+  newTag: 0d3c45516968bffb24196952c3273cebd6df5d4f
 
 patches:
   - path: auto-assign-role-patch.yaml
     target:
       name: grafana-oauth
       kind: Grafana
+  - path: grafana-dev-resources-patch.yaml
+    target:
+      name: grafana-oauth
+      kind: Grafana
+  - path: grafana-operator-dev-resources-patch.yaml
+    target:
+      name: grafana-operator
+      kind: Subscription
+      group: operators.coreos.com
+      version: v1alpha1
+  # Add a 'version' to avoid using the docker image
+  - patch: |
+      apiVersion: grafana.integreatly.org/v1beta1
+      kind: Grafana
+      metadata:
+        name: grafana-oauth
+        namespace: appstudio-grafana
+      spec:
+        version: quay.io/kubearchive/grafana:12.1.0

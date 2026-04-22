@@ -1,6 +1,8 @@
 resources:
 - ../base
-- https://github.com/konflux-ci/crossplane-control-plane/examples/provider-kubernetes-in-cluster?ref=3df90763aa750cf27b45df24e6dc67ccd139a056
+- https://github.com/konflux-ci/crossplane-control-plane/crossplane?ref=1563d850a1331ed68796ddc7e3849de5ee011579
+- https://github.com/konflux-ci/crossplane-control-plane/config?ref=1563d850a1331ed68796ddc7e3849de5ee011579
+- https://github.com/konflux-ci/crossplane-control-plane/examples/provider-kubernetes-in-cluster?ref=1563d850a1331ed68796ddc7e3849de5ee011579
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization

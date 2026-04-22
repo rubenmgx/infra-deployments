@@ -6,11 +6,13 @@ metadata:
 rules:
   - verbs:
       - get
+      - list
     apiGroups:
       - ''
     resourceNames:
       - konflux-public-info
       - konflux-banner-configmap
+      - cluster-config
     resources:
       - configmaps
 ---

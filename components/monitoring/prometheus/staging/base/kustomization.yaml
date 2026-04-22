@@ -5,6 +5,7 @@ resources:
 - ../../base/external-secrets
 - ../../base/observability-operator
 - ../../base/rbac
+- ../../base/custom-modifications
 - monitoringstack/
 
 patches:
@@ -13,5 +14,5 @@ patches:
       name: rhobs
       kind: ExternalSecret
       group: external-secrets.io
-      version: v1beta1
+      version: v1
   - path: rbac-path.yaml

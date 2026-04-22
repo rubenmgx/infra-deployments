@@ -3,7 +3,6 @@
 approvers:
 - davidmogar
 - johnbieren
-- scoheb
 - theflockers
 - mmalina
 - happybhati
@@ -11,11 +10,13 @@ approvers:
 - jinqi7
 - filipnikolovski
 - elenagerman
+- midnightercz
+- querti
+- swickersh
 
 reviewers:
 - davidmogar
 - johnbieren
-- scoheb
 - theflockers
 - mmalina
 - happybhati
@@ -23,3 +24,6 @@ reviewers:
 - jinqi7
 - filipnikolovski
 - elenagerman
+- midnightercz
+- querti
+- swickersh

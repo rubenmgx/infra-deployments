@@ -11,12 +11,16 @@ resources:
   - build-templates
   - etcd-defrag
   - etcd-shield
+  - disaster-recovery
   - internal-services
   - image-controller
+  - image-rbac-proxy
   - multi-platform-controller
   - perf-team-prometheus-reader
   - project-controller
   - mintmaker
+  - monitoring-cardinality
+  - monitoring-registry
   - nvme-storage-configurator
   - tracing-workload-otel-collector
   - tempo

@@ -1,23 +1,13 @@
 # See the OWNERS docs: https://go.k8s.io/owners
 
 approvers:
-- simonbaird
-- lcarva
-- chmouel
-- dirgim
-- elsony
-- skabashnyuk
-- scoheb
 - adambkaplan
+- arewm
+- eisraeli
+- enkeefe00
+- filariow
 - gbenhaim
 - hugares
 - manish-jangra
-- mmorhun
-- tisutisu
-- arewm
-- psturc
-- ralphbean
-- kubasikus
-- pacho-rh
-- mftb
-- raks-tt
+- mshaposhnik
+- sadlerap
